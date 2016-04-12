@@ -27,9 +27,7 @@ public class CustomerFacade extends AbstractFacade<Customer> {
         return em;
     }
 
-    public CustomerFacade() {
-        super(Customer.class);
-    }
+    
     
      public Customer aunthenticateCustomer(String email,String password) {
         Customer customer = null;
@@ -45,5 +43,28 @@ public class CustomerFacade extends AbstractFacade<Customer> {
         }
         return customer;
     }
+      @Override
+    public void create(Customer customer) {
+        //log insert new customer
+        
+    
+        
+        
+        try {
+          super.create(customer);
+           } catch (Exception e) {
+           
+        }
+        
+        
+
+
+
+    }
+    public CustomerFacade() {
+        super(Customer.class);
+    }
+
+     
 
 }

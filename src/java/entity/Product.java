@@ -38,6 +38,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
     @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p WHERE p.id = :id"),
     @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name LIKE :productName"),
+    @NamedQuery(name = "Product.findByRating", query = "SELECT p FROM Product p WHERE p.rating = 5"),
     @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price between :price1 AND :price2"),
     @NamedQuery(name = "Product.findByLastUpdate", query = "SELECT p FROM Product p WHERE p.lastUpdate = :lastUpdate")})
 public class Product implements Serializable {
@@ -65,6 +66,9 @@ public class Product implements Serializable {
     private Category category;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private Collection<OrderedProduct> orderedProductCollection;
+    @Basic(optional = false)
+    @Column(name = "rating")
+    private int rating;
 
     public Product() {
     }
@@ -73,12 +77,21 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public Product(Integer id, String name, BigDecimal price, Date lastUpdate,String description) {
+    public Product(Integer id, String name, BigDecimal price, Date lastUpdate,String description,int rating) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.lastUpdate = lastUpdate;
         this.description= description;
+        this.rating=rating;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public Integer getId() {

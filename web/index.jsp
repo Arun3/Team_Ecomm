@@ -44,9 +44,11 @@
     </c:when>
         <c:otherwise>
                   
-            Happy shopping!!!
+            Happy shopping!!!<br><br>
+            <a href="<c:url value='recommend'/>">Products recommended for me</a>
         </c:otherwise>
     </c:choose>
+            
         
     </div>
 </div>

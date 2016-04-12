@@ -44,7 +44,8 @@ import validate.Validator;
                            "/chooseLanguage",
                            "/searchProduct",
                            "/filterProduct",
-                           "/SignUp"
+                           "/SignUp",
+                           "/recommend"
                            })
 public class ControllerServlet extends HttpServlet {
 
@@ -129,7 +130,25 @@ public class ControllerServlet extends HttpServlet {
 
 
         // if checkout page is requested
-        } else if (userPath.equals("/checkout")) {
+        } 
+         else if (userPath.equals("/recommend")) {
+
+            List<Product> products = productFacade.findProductByRating();
+
+
+            if (products != null /*&& customer.getCustomertId() == customer1.getCustomerId()*/) {
+                request.getSession().setAttribute("products", products);//store customer in a session scoped variable, for next jobs
+                System.out.println("Product found");
+                response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+                response.setHeader("Location", "foundProducts.jsp");//??
+                userPath = "/foundProducts";
+                return;
+            }
+
+        // if checkout page is requested
+        }
+        
+        else if (userPath.equals("/checkout")) {
 
             ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 
@@ -249,9 +268,10 @@ public class ControllerServlet extends HttpServlet {
             //Customer newCustomer = new Customer(id, name, email, phone, address, cityRegion, ccNumber);//??  or set functions?
             //newCustomer = orderManager.addCustomer( name, email, phone, address, cityRegion, ccNumber);
             customerFacade.create(newCustomer);
-            response.setHeader("Location", "index.jsp?signedup");//??
-            userPath = "/index";//??
-            return;
+           response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+                    response.setHeader("Location", "index.jsp");//??
+                    userPath = "/category";//??
+                    return;
            
         }
         else if (userPath.equals("/searchProduct")) {  //??

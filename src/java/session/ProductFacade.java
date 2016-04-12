@@ -45,6 +45,24 @@ public class ProductFacade extends AbstractFacade<Product> {
         }           
         return products;
     }
+       public List<Product> findProductByRating() {
+        List<Product> products = null;
+     
+        try{
+            Query query = em.createNamedQuery("Product.findByRating");
+                       
+            products = query.getResultList();
+            // log Select request:
+          // log.debug("Q[?]");
+            
+        }
+        catch(Exception e){
+            String err = e.getMessage();
+            System.out.println(err);
+
+        }           
+        return products;
+    }
        public List<Product> findProductByPrice(String price) {
         List<Product> products = null;
         float price1;
