@@ -22,6 +22,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import javax.sound.midi.SysexMessage;
 import session.CategoryFacade;
 import session.OrderManager;
 import session.ProductFacade;
@@ -45,7 +46,8 @@ import validate.Validator;
                            "/searchProduct",
                            "/filterProduct",
                            "/SignUp",
-                           "/recommend"
+                           "/recommend",
+                           "/rate"
                            })
 public class ControllerServlet extends HttpServlet {
 
@@ -230,7 +232,9 @@ public class ControllerServlet extends HttpServlet {
                     request.getSession().setAttribute("customer", customer);//store customer in a session scoped variable, for next jobs
                     request.getSession().setAttribute("message","success");
                     System.out.println("In controller--------success");
-                    
+                    int customerId = customer.getId();
+                    System.out.println();
+                    session.setAttribute("customerI", customerId);
                     response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
                     response.setHeader("Location", "index.jsp");//??
                     userPath = "/category";//??
@@ -297,6 +301,33 @@ public class ControllerServlet extends HttpServlet {
                 response.setHeader("Location", "index.jsp?err=-1");
             }
         }
+        
+        else if (userPath.equals("/rate")) {  //??
+            /////////checkLogin(request, response);
+            String productId = request.getParameter("productId");
+            System.out.println("product ID" + productId);
+            String customerId = (String)session.getAttribute("customerId");
+            System.out.println("input:"+customerId);
+            //String password = request.getParameter("password");
+
+//            Product[] product = productFacade.findProductByName(productName);
+//            List<Product> products = productFacade.findProductByName(productName);
+//
+//
+//            if (products != null /*&& customer.getCustomertId() == customer1.getCustomerId()*/) {
+//                request.getSession().setAttribute("products", products);//store customer in a session scoped variable, for next jobs
+//                System.out.println("Product found");
+//                response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+//                response.setHeader("Location", "foundProducts.jsp");//??
+//                userPath = "/foundProducts";
+//                return;
+//            } else {
+
+                response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+                response.setHeader("Location", "foundProducts.jsp");
+            
+        }
+        
         else if (userPath.equals("/filterProduct")) {  //??
             /////////checkLogin(request, response);
             String priceRange = request.getParameter("price");

@@ -71,8 +71,15 @@
                                value="${product.id}">
                         <input type="submit"
                                name="submit"
-                               value="<fmt:message key='addToCart'/>">
+                               value="<fmt:message key='addToCart'/>"><br><br>
+                        
                     </form>
+                               <form action="<c:url value='rate'/>" method="post">
+                                <input type="submit"
+                               name="submit"
+                               value="Rate this product">
+                               
+                               </form>
                 </td>
             </tr>
 

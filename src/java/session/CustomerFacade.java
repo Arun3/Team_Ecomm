@@ -43,6 +43,8 @@ public class CustomerFacade extends AbstractFacade<Customer> {
         }
         return customer;
     }
+     
+     
       @Override
     public void create(Customer customer) {
         //log insert new customer
