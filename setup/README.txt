@@ -63,3 +63,12 @@ Notes:
 
     - The application uses EclipseLink as the persistence provider, and was developed using NetBeans
       6.8 and 6.9 with GlassFish 3.
+
+Netbeans 8 Users:
+    - If using Netbeans 8 with its accompanying Glassfish Server 4, you may need to copy the mysql connector
+      jar from this location: in the NetBeans IDE, navigate to the Services tab on the top left. Click on 
+      Services -> Drivers -> MySQL (Connector/J driver). Right-click on it and click "Customize". Using
+      the location listed here, copy the mysql-connector-java jar to inside your GlassFish 
+    installation directory: ~/glassfish-[version number]/glassfish/lib . Restart your IDE after this.
+    
+    
