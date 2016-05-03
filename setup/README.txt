@@ -1,6 +1,8 @@
 
 Troy Giunipero
 17 May 2010
+Joseph Caprino
+3 May 2016 (Edits)
 
 For detailed setup instructions, see:  http://netbeans.org/kb/docs/javaee/ecommerce/setup.html
 
@@ -52,6 +54,25 @@ Before running the application,
 
     After making this change, you'll need to restart the server (if it's already running).
 
+ 7. To make the admin features functional, you will need to 
+
+
+    a. edit the Glassfish server so that
+    the admin user has the proper permissions to access the pages she needs to access. In the 
+    NetBeans IDE, navigate to the Services tab -> Servers -> GlassFish Server -> right-click 
+    and select "View Domain Admin Console" -> Configurations -> Server Config -> Security ->
+    Realms -> File -> Manage Users -> New. Follow the instructions here, specifically Step 8:
+    https://netbeans.org/kb/docs/javaee/ecommerce/security.html at the section titled "Create
+    Users and/or Groups on the Server". 
+    b. Additionally, with GlassFish Server 4, also navigate to "View Domain Admin Console" -> 
+    Configurations -> Default Config -> Security and check the box "Default Principal to Role Mapping"
+    and then click save. Do the same at "View Domain Admin Console" -> 
+    Configurations -> Server Config -> Security .
+    c. Finally, navigate to ~/glassfish-[version number]/glassfish/lib (Windows: 
+    C:\Program Files\glassfish-[version]\) and edit glassfish\domains\domain1\config\domain.xml
+    so that <network-listener is on ports 9090 instead of 8080 and 9191 instead of 8181.
+    f. Restart the IDE and re-run the website.
+
 
 Notes:
 
@@ -69,6 +90,8 @@ Netbeans 8 Users:
       jar from this location: in the NetBeans IDE, navigate to the Services tab on the top left. Click on 
       Services -> Drivers -> MySQL (Connector/J driver). Right-click on it and click "Customize". Using
       the location listed here, copy the mysql-connector-java jar to inside your GlassFish 
-    installation directory: ~/glassfish-[version number]/glassfish/lib . Restart your IDE after this.
+      installation directory: ~/glassfish-[version number]/glassfish/lib (Windows: C:\Program Files\glassfish-[version]).
+      Restart your IDE after this.
     
+
     
