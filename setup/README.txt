@@ -54,6 +54,13 @@ Before running the application,
 
     After making this change, you'll need to restart the server (if it's already running).
 
+ 7. To make the admin features functional, you will need to edit the Glassfish server so that
+    the admin user has the proper permissions to access the pages she needs to access. In the 
+    NetBeans IDE, navigate to the Services tab -> Servers -> GlassFish Server -> right-click 
+    and select "View Domain Admin Console" -> Configurations -> Server Config -> Security ->
+    Realms -> File -> Manage Users -> New. Follow the instructions here, specifically Step 8:
+    https://netbeans.org/kb/docs/javaee/ecommerce/security.html at the section titled "Create
+    Users and/or Groups on the Server". 
 
 Notes:
 
@@ -74,4 +81,5 @@ Netbeans 8 Users:
       installation directory: ~/glassfish-[version number]/glassfish/lib (Windows: C:\Program Files\glassfish-[version]).
       Restart your IDE after this.
     
+
     
