@@ -69,6 +69,7 @@ Netbeans 8 Users:
       jar from this location: in the NetBeans IDE, navigate to the Services tab on the top left. Click on 
       Services -> Drivers -> MySQL (Connector/J driver). Right-click on it and click "Customize". Using
       the location listed here, copy the mysql-connector-java jar to inside your GlassFish 
-    installation directory: ~/glassfish-[version number]/glassfish/lib . Restart your IDE after this.
+      installation directory: ~/glassfish-[version number]/glassfish/lib (Windows: C:\Program Files\glassfish-[version]).
+      Restart your IDE after this.
     
     
