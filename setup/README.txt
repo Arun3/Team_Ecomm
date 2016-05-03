@@ -1,6 +1,8 @@
 
 Troy Giunipero
 17 May 2010
+Joseph Caprino
+3 May 2016 (Edits)
 
 For detailed setup instructions, see:  http://netbeans.org/kb/docs/javaee/ecommerce/setup.html
 
