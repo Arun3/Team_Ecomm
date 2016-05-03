@@ -15,7 +15,8 @@
 //% not been tested to the degree that would be advisable in any important
 //% application.  All use of these programs is entirely at the user's own risk.
 
-
+//NOTE THAT THIS SOFTWARE NEEDS the following libraries:
+//MySQL Connector for C++: libmysqlcppcon-dev (last used was version 1.1.3-5)
 
 
 
