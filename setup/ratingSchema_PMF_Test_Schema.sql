@@ -65,9 +65,9 @@ DROP TABLE IF EXISTS `rating`;
 
 CREATE TABLE `rating` (
 `rating_value` double NOT NULL,
-`user_id` INT UNSIGNED NOT NULL, 
+`customer_id` INT UNSIGNED NOT NULL, 
 `product_id` INT UNSIGNED NOT NULL,
-PRIMARY KEY (`user_id`, `product_id` ),
-FOREIGN KEY (`user_id` ) REFERENCES affablebean_pmf_test.customer(`id`),
+PRIMARY KEY (`customer_id`, `product_id` ),
+FOREIGN KEY (`customer_id` ) REFERENCES affablebean_pmf_test.customer(`id`),
 FOREIGN KEY (`product_id` ) REFERENCES affablebean_pmf_test.product(`id`)
  );
