@@ -64,7 +64,7 @@ USE `rating_recommending_pmf_test`;
 DROP TABLE IF EXISTS `rating`;
 
 CREATE TABLE `rating` (
-`rating_value` float NOT NULL,
+`rating_value` double NOT NULL,
 `user_id` INT UNSIGNED NOT NULL, 
 `product_id` INT UNSIGNED NOT NULL,
 PRIMARY KEY (`user_id`, `product_id` ),
