@@ -61,10 +61,20 @@ CALL dummy_product_generator( 'exampleproduct' );
 
 CREATE DATABASE IF NOT EXISTS `rating_recommending_pmf_test`;
 USE `rating_recommending_pmf_test`;
-DROP TABLE IF EXISTS `rating`;
 
+DROP TABLE IF EXISTS `rating`;
 CREATE TABLE `rating` (
 `rating_value` INT NOT NULL,
+`user_id` INT UNSIGNED NOT NULL, 
+`product_id` INT UNSIGNED NOT NULL,
+PRIMARY KEY (`user_id`, `product_id` ),
+FOREIGN KEY (`user_id` ) REFERENCES affablebean_pmf_test.customer(`id`),
+FOREIGN KEY (`product_id` ) REFERENCES affablebean_pmf_test.product(`id`)
+ );
+
+DROP TABLE IF EXISTS `predicted_rating`;
+CREATE TABLE `predicted_rating` (
+`predicted_rating_value` DOUBLE NOT NULL,
 `user_id` INT UNSIGNED NOT NULL, 
 `product_id` INT UNSIGNED NOT NULL,
 PRIMARY KEY (`user_id`, `product_id` ),
