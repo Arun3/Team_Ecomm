@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
  * Copyright (c) 2010, Oracle and/or its affiliates. All rights reserved.
  *
@@ -9,12 +8,17 @@
  *
  * author: tgiunipero
 -->
-
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
   <persistence-unit name="AffableBeanPU" transaction-type="JTA">
     <jta-data-source>jdbc/affablebean</jta-data-source>
     <properties>
       <property name="eclipselink.logging.level" value="FINEST"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="RecommenderPU" transaction-type="JTA">
+    <jta-data-source>jdbc/rating_recommending</jta-data-source>
+    <properties>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
 </persistence>

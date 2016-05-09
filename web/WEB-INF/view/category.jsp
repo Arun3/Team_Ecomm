@@ -75,6 +75,9 @@
                         
                     </form>
                                <form action="<c:url value='rate'/>" method="post">
+                                    <input type="hidden"
+                               name="productId"
+                               value="${product.id}">
                                 <input type="submit"
                                name="submit"
                                value="Rate this product">
