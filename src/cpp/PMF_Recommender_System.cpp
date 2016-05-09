@@ -642,7 +642,7 @@ int main() {
 		}//end epoch loop
 		cout << "final training RMSE: " << err_train[maxepoch-1] << endl; //" final test RMSE: " << err_valid[maxepoch-1] << "\n";
 
-		//CALCULATING THE USER-PERSONALIZED RECOMMENDATIONS MATRIX
+		//CALCULATING THE USER-PERSONALIZED RECOMMENDATION PREDICTIONS MATRIX
 		cout << "calculating personalized recommendations matrix" << endl;
 
 
@@ -660,7 +660,32 @@ int main() {
 			}
 		}
 
+		//INSERTING USER-PERSONALIZED RECOMMENDATION PREDICTIONS INTO THE DATABASE:
+		cout << "inserting user-personalized recommendation predictions for each product";
+		cout << " into the database" << endl;
+		sql_connection->setSchema("rating_recommending_pmf_test");
 
+		sql_statement = sql_connection->createStatement();
+
+		for(int i=0; i<customer_count; i++) {
+			for(int j=0; j<product_count; j++) {
+				//help from here: https://dev.mysql.com/doc/connector-cpp/en/connector-cpp-examples-query.html
+				string insert_query_string = "INSERT INTO predicted_rating(user_id, product_id, ";
+				insert_query_string += "predicted_rating_value) VALUES (";
+				insert_query_string += to_string( customer_id_map[i] );
+				insert_query_string += ",";
+				insert_query_string += to_string( product_id_map[j] );
+				insert_query_string += ",";
+				insert_query_string += to_string( (personalized_predicted_ratings[i*product_count + j] + mean_rating) ); //predicted_rating );
+				//help from here: http://stackoverflow.com/questions/4205181/insert-into-a-mysql-table-or-update-if-exists
+				insert_query_string += ") ON DUPLICATE KEY UPDATE predicted_rating_value=";
+				insert_query_string += to_string( (personalized_predicted_ratings[i*product_count + j] + mean_rating) ); //predicted_rating );
+//				cout << "insert_query_string: " << insert_query_string << endl;
+
+				sql_statement->execute(insert_query_string);
+			}
+		}
+		cout << "Completed insertion/update of predicted product ratings" << endl;
 
 		//cleanup
 		//delete[] training_data_uid, training_data_mid, training_data_rating;
@@ -681,6 +706,7 @@ int main() {
 		cout << ", SQLState: " << exception.getSQLState() << " )" << endl;
 	}
 
+	cout << "Recommendation Program Complete!" << endl;
 	return 0;
 
 
