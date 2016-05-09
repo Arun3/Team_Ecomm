@@ -68,7 +68,7 @@ Before running the application,
     Configurations -> Default Config -> Security and check the box "Default Principal to Role Mapping"
     and then click save. Do the same at "View Domain Admin Console" -> 
     Configurations -> Server Config -> Security .
-    c. Finally, navigate to ~/glassfish-[version number]/glassfish/lib (Windows: 
+    c. Finally, navigate to ~/glassfish-[version number]/glassfish/ (Windows: 
     C:\Program Files\glassfish-[version]\) and edit glassfish\domains\domain1\config\domain.xml
     so that <network-listener is on ports 9090 instead of 8080 and 9191 instead of 8181.
     f. Restart the IDE and re-run the website.
