@@ -56,7 +56,7 @@
     <description>Connects to the affablebean database</description>
     <property name="URL" value="jdbc:mysql://localhost:3306/affablebean"/>
     <property name="User" value="root"/>
-    <property name="Password" value="nbuser"/>
+    <property name="Password" value="Ar_un@200491"/>
   </jdbc-connection-pool>
   
   

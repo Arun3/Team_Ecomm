@@ -27,6 +27,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,6 +43,10 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price between :price1 AND :price2"),
     @NamedQuery(name = "Product.findByLastUpdate", query = "SELECT p FROM Product p WHERE p.lastUpdate = :lastUpdate")})
 public class Product implements Serializable {
+    @Column(name = "rating")
+    private Integer rating;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private Collection<Cart> cartCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,9 +71,6 @@ public class Product implements Serializable {
     private Category category;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private Collection<OrderedProduct> orderedProductCollection;
-    @Basic(optional = false)
-    @Column(name = "rating")
-    private int rating;
 
     public Product() {
     }
@@ -86,13 +88,6 @@ public class Product implements Serializable {
         this.rating=rating;
     }
 
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
 
     public Integer getId() {
         return id;
@@ -171,6 +166,23 @@ public String getDescription() {
     @Override
     public String toString() {
         return "entity.Product[id=" + id + "]";
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    @XmlTransient
+    public Collection<Cart> getCartCollection() {
+        return cartCollection;
+    }
+
+    public void setCartCollection(Collection<Cart> cartCollection) {
+        this.cartCollection = cartCollection;
     }
 
 }

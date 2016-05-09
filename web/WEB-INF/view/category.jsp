@@ -78,6 +78,7 @@
                                     <input type="hidden"
                                name="productId"
                                value="${product.id}">
+                                    <input type="number" min="0" max="5" name="rating"/>
                                 <input type="submit"
                                name="submit"
                                value="Rate this product">

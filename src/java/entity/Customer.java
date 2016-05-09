@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,6 +39,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "Customer.findByCityRegion", query = "SELECT c FROM Customer c WHERE c.cityRegion = :cityRegion"),
     @NamedQuery(name = "Customer.findByCcNumber", query = "SELECT c FROM Customer c WHERE c.ccNumber = :ccNumber")})
 public class Customer implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+    private Collection<Cart> cartCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -181,6 +184,15 @@ public class Customer implements Serializable {
     @Override
     public String toString() {
         return "entity.Customer[id=" + id + "]";
+    }
+
+    @XmlTransient
+    public Collection<Cart> getCartCollection() {
+        return cartCollection;
+    }
+
+    public void setCartCollection(Collection<Cart> cartCollection) {
+        this.cartCollection = cartCollection;
     }
 
 }

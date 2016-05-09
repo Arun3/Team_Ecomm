@@ -9,13 +9,19 @@
 package controller;
 
 import cart.ShoppingCart;
+import entity.Cart;
+import entity.CartPK;
 import entity.Category;
 import entity.Customer;
 import entity.Product;
 import entity.Rating;
 import entity.RatingPK;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -25,6 +31,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import javax.sound.midi.SysexMessage;
+import session.CartFacade;
 import session.CategoryFacade;
 import session.OrderManager;
 import session.ProductFacade;
@@ -66,6 +73,8 @@ public class ControllerServlet extends HttpServlet {
     private CustomerFacade customerFacade;
     @EJB
     private RatingFacade ratingFacade;
+    @EJB
+    private CartFacade cartFacade;
 
 
     @Override
@@ -96,6 +105,7 @@ public class ControllerServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Category selectedCategory;
         Collection<Product> categoryProducts;
+        Collection<Cart> cartItems;
         
         
 
@@ -240,6 +250,12 @@ public class ControllerServlet extends HttpServlet {
                     int customerId = customer.getId();
                     System.out.println("Customer ID"+customerId);
                     session.setAttribute("customerId", customerId);
+                    
+                    Cart newcart= cartFacade.getCartItems(customerId);
+                   Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+                   
+                    
+                    
                     response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
                     response.setHeader("Location", "index.jsp");//??
                     userPath = "/category";//??
@@ -314,6 +330,7 @@ public class ControllerServlet extends HttpServlet {
             HttpSession session2=request.getSession();
             int customerId = (Integer)session2.getAttribute("customerId");
             System.out.println("input:"+customerId);
+            float rating= Float.parseFloat(request.getParameter("rating"));
             float i=5;
             RatingPK newRatingPk = new RatingPK();
             Rating newRating = new Rating() ;
@@ -321,7 +338,7 @@ public class ControllerServlet extends HttpServlet {
             newRatingPk.setUserId(customerId);
             newRatingPk.setProductId(productId);
            newRating.setRatingPK(newRatingPk);
-           newRating.setRatingValue(i);
+           newRating.setRatingValue(rating);
             
            
             
@@ -344,7 +361,8 @@ public class ControllerServlet extends HttpServlet {
 //            } else {
 
                 response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-                response.setHeader("Location", "tableu.jsp");
+                response.setHeader("Location", "index.jsp");
+                userPath = "/category";
             
         }
         
@@ -393,6 +411,27 @@ public class ControllerServlet extends HttpServlet {
                 Product product = productFacade.find(Integer.parseInt(productId));
                 cart.addItem(product);
             }
+            
+            System.out.println("product ID" + productId);
+            HttpSession session2=request.getSession();
+            int customerId = (Integer)session2.getAttribute("customerId");
+            System.out.println("input:"+customerId);
+            
+            Cart newcart = new Cart();
+            CartPK newcartpk = new CartPK();
+            Integer intObject = new Integer(productId);
+int productId1 = intObject.intValue();
+            System.out.println("integer product ID"+productId1);
+            Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+            newcartpk.setProductId(23);
+            newcartpk.setUserId(customerId);
+            newcart.setCartPK(newcartpk);
+            newcart.setCreatedTime(currentTimestamp);
+            newcart.setQuantity(1);
+            
+            cartFacade.create(newcart);
+            
+            
 
             userPath = "/cart";
 

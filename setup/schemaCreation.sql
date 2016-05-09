@@ -119,7 +119,24 @@ CREATE  TABLE IF NOT EXISTS `affablebean`.`ordered_product` (
 ENGINE = InnoDB
 COMMENT = 'matches products with customer orders and records their quantity';
 
+---
+-- To add rating field to product table
+-- -----------------------------------------------------
 
+alter table product add rating integer;
+
+---
+-- To add cart table to affablebean database
+-- -----------------------------------------------------
+CREATE TABLE affablebean.`cart` (
+`user_id` INT UNSIGNED NOT NULL,
+`product_id` INT UNSIGNED NOT NULL, 
+`createdTime` TIMESTAMP,
+`quantity` INT NOT NULL,
+PRIMARY KEY (`user_id`, `product_id` ),
+FOREIGN KEY (`user_id` ) REFERENCES affablebean.customer(`id`),
+FOREIGN KEY (`product_id` ) REFERENCES affablebean.product(`id`)
+ );
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
