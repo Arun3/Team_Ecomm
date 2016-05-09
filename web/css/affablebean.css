@@ -444,3 +444,16 @@ label.error {
     margin: 0;
     border: none;
 }
+#move{
+        
+        
+        margin-left: 85%;
+        margin-bottom: 0px;
+        padding-bottom: -50%;
+        
+    }
+    
+    #tableau{
+        margin-right: 80%;
+            text-align : center;
+    }

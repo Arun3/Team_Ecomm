@@ -18,6 +18,13 @@
                  object-type="user"
                  pool-name="AffableBeanPool">
   </jdbc-resource>
+  
+   <jdbc-resource enabled="true"
+                 jndi-name="jdbc/rating_recommending"
+                 object-type="user"
+                 pool-name="mysql_rating_recommending_rootPool">
+  </jdbc-resource>
+
 
   <jdbc-connection-pool allow-non-component-callers="false"
                         associate-with-thread="false"
@@ -48,6 +55,40 @@
 
     <description>Connects to the affablebean database</description>
     <property name="URL" value="jdbc:mysql://localhost:3306/affablebean"/>
+    <property name="User" value="root"/>
+    <property name="Password" value="Ar_un@200491"/>
+  </jdbc-connection-pool>
+  
+  
+  <jdbc-connection-pool allow-non-component-callers="false"
+                        associate-with-thread="false"
+                        connection-creation-retry-attempts="0"
+                        connection-creation-retry-interval-in-seconds="10"
+                        connection-leak-reclaim="false"
+                        connection-leak-timeout-in-seconds="0"
+                        connection-validation-method="auto-commit"
+                        datasource-classname="com.mysql.jdbc.jdbc2.optional.MysqlDataSource"
+                        fail-all-connections="false"
+                        idle-timeout-in-seconds="300"
+                        is-connection-validation-required="false"
+                        is-isolation-level-guaranteed="true"
+                        lazy-connection-association="false"
+                        lazy-connection-enlistment="false"
+                        match-connections="false"
+                        max-connection-usage-count="0"
+                        max-pool-size="32"
+                        max-wait-time-in-millis="60000"
+                        name="mysql_rating_recommending_rootPool"
+                        non-transactional-connections="false"
+                        pool-resize-quantity="2"
+                        res-type="javax.sql.ConnectionPoolDataSource"
+                        statement-timeout-in-seconds="-1"
+                        steady-pool-size="8"
+                        validate-atmost-once-period-in-seconds="0"
+                        wrap-jdbc-objects="false">
+
+    <description>Connects to the recommender database</description>
+    <property name="URL" value="jdbc:mysql://localhost:3306/rating_recommending"/>
     <property name="User" value="root"/>
     <property name="Password" value="Ar_un@200491"/>
   </jdbc-connection-pool>

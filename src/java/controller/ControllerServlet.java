@@ -12,6 +12,8 @@ import cart.ShoppingCart;
 import entity.Category;
 import entity.Customer;
 import entity.Product;
+import entity.Rating;
+import entity.RatingPK;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
@@ -27,6 +29,7 @@ import session.CategoryFacade;
 import session.OrderManager;
 import session.ProductFacade;
 import session.CustomerFacade;
+import session.RatingFacade;
 import validate.Validator;
 
 /**
@@ -61,6 +64,8 @@ public class ControllerServlet extends HttpServlet {
     private OrderManager orderManager;
     @EJB
     private CustomerFacade customerFacade;
+    @EJB
+    private RatingFacade ratingFacade;
 
 
     @Override
@@ -233,8 +238,8 @@ public class ControllerServlet extends HttpServlet {
                     request.getSession().setAttribute("message","success");
                     System.out.println("In controller--------success");
                     int customerId = customer.getId();
-                    System.out.println();
-                    session.setAttribute("customerI", customerId);
+                    System.out.println("Customer ID"+customerId);
+                    session.setAttribute("customerId", customerId);
                     response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
                     response.setHeader("Location", "index.jsp");//??
                     userPath = "/category";//??
@@ -304,10 +309,25 @@ public class ControllerServlet extends HttpServlet {
         
         else if (userPath.equals("/rate")) {  //??
             /////////checkLogin(request, response);
-            String productId = request.getParameter("productId");
+            int productId = Integer.parseInt(request.getParameter("productId"));
             System.out.println("product ID" + productId);
-            String customerId = (String)session.getAttribute("customerId");
+            HttpSession session2=request.getSession();
+            int customerId = (Integer)session2.getAttribute("customerId");
             System.out.println("input:"+customerId);
+            float i=5;
+            RatingPK newRatingPk = new RatingPK();
+            Rating newRating = new Rating() ;
+           
+            newRatingPk.setUserId(customerId);
+            newRatingPk.setProductId(productId);
+           newRating.setRatingPK(newRatingPk);
+           newRating.setRatingValue(i);
+            
+           
+            
+            //Customer newCustomer = new Customer(id, name, email, phone, address, cityRegion, ccNumber);//??  or set functions?
+            //newCustomer = orderManager.addCustomer( name, email, phone, address, cityRegion, ccNumber);
+            ratingFacade.create(newRating);
             //String password = request.getParameter("password");
 
 //            Product[] product = productFacade.findProductByName(productName);
@@ -324,7 +344,7 @@ public class ControllerServlet extends HttpServlet {
 //            } else {
 
                 response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-                response.setHeader("Location", "foundProducts.jsp");
+                response.setHeader("Location", "tableu.jsp");
             
         }
         
