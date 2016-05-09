@@ -142,8 +142,8 @@ int main() {
 		int rating_row = 0;
 		while( sql_results->next() ) {
 			//			cout << "ROW:" << endl;
-			//			cout << "customer id: " << sql_results->getInt("customer_id") << endl;
-			int customer_id = sql_results->getInt("customer_id");
+			//			cout << "customer id: " << sql_results->getInt("user_id") << endl;
+			int customer_id = sql_results->getInt("user_id");
 			//finding the corresponding index value for the product id and the customer id
 			//Later, this can be changed to a bidirectional map or use binary search
 			//to improve complexity
@@ -153,8 +153,8 @@ int main() {
 			int product_id = sql_results->getInt("product_id");
 			int product_map_index = 0;
 			while(product_id != product_id_map[product_map_index] ) product_map_index++;
-			//			cout << "rating value: " << sql_results->getDouble("rating_value") << endl;
-			double rating_value = sql_results->getDouble("rating_value");
+			//			cout << "rating value: " << sql_results->getInt("rating_value") << endl;
+			double rating_value = sql_results->getInt("rating_value");
 
 			//storing a given triplet in the same index of these vectors
 			//			cout << "Mapped:" << endl;
@@ -174,13 +174,13 @@ int main() {
 		//		//stackoverflow.com/questions/14516915/read-numeric-data-from-a-text-file-in-c
 		//		//1st: create an ifstream object with the filename as the argument
 		//		//	ifstream training_data_file("pmftraining.txt");
-		//		ifstream validation_data_file("pmfvalidation.txt");
+		ifstream validation_data_file("pmfvalidation.txt");
 
 
 		//hard-coding this for now
 		int pairs_tr = rating_count;
 		cout << "rating count: " << rating_count << endl;
-		int pairs_pr = 100209;
+		//		int pairs_pr = 100209;
 		int * training_data_uid = ratings_customer_id;
 		int * training_data_mid = ratings_product_id;
 		double * training_data_rating = ratings_rating_value;
@@ -198,27 +198,27 @@ int main() {
 
 
 		//		int training_datum;
-		//		int validation_datum;
+		//				int validation_datum;
 
-//		i = 0;
-//		//	while ((training_data_file >> training_datum) && (i<(900*1000*3)))
-//		//	{
-//		//		//setting user id and movie id to be 0-based with the - 1's
-//		//		if((i%3) == 0) training_data_uid[i/3] = training_datum - 1;
-//		//		else if((i%3) == 1) training_data_mid[i/3] = training_datum - 1;
-//		//		else training_data_rating[i/3] = training_datum;
-//		//		i++;
-//		//	}
-//		//
-//		i = 0;
-//		while ((validation_data_file >> validation_datum) && (i<(100209*3)))
-//		{
-//			//setting user id and movie id to be 0-based with the - 1's
-//			if((i%3) == 0) validation_data_uid[i/3] = validation_datum - 1;
-//			else if((i%3) == 1) validation_data_mid[i/3] = validation_datum - 1;
-//			else validation_data_rating[i/3] = validation_datum;
-//			i++;
-//		}
+		//		i = 0;
+		//		//	while ((training_data_file >> training_datum) && (i<(900*1000*3)))
+		//		//	{
+		//		//		//setting user id and movie id to be 0-based with the - 1's
+		//		//		if((i%3) == 0) training_data_uid[i/3] = training_datum - 1;
+		//		//		else if((i%3) == 1) training_data_mid[i/3] = training_datum - 1;
+		//		//		else training_data_rating[i/3] = training_datum;
+		//		//		i++;
+		//		//	}
+		//		//
+		//				i = 0;
+		//				while ((validation_data_file >> validation_datum) && (i<(100209*3)))
+		//				{
+		//					//setting user id and movie id to be 0-based with the - 1's
+		//					if((i%3) == 0) validation_data_uid[i/3] = validation_datum - 1;
+		//					else if((i%3) == 1) validation_data_mid[i/3] = validation_datum - 1;
+		//					else validation_data_rating[i/3] = validation_datum;
+		//					i++;
+		//				}
 
 		//get the mean of the 3rd column of the training data
 		//and stores it into a variable
@@ -236,6 +236,9 @@ int main() {
 		int num_m = product_count; //number of movies
 		int num_p = customer_count; //number of users
 		int num_feat = 10; //number of features: rank 10 decomposition
+
+		//Personalized Predicted Ratings Matrix
+		double * personalized_predicted_ratings = new double[product_count*customer_count];
 
 		//set N to the number of training triplets per batch (default 10^5);
 		//KNOWN BUG (if it's even that serious, it may not be):
@@ -572,7 +575,7 @@ int main() {
 
 
 			//			//Compute predictions on the validation set
-			//
+			//			//
 			//			//set NN=pairs_pr
 			//			//above unncessary as int NN = pairs_pr;
 			//			//set aa_p = (cast double) first column of the probe vec
@@ -631,20 +634,41 @@ int main() {
 			//the training RMSE (err_train(epoch)),
 			//and the test RMSE (err_valid(epoch)).
 			cout << "\n" << "epoch #: " << epoch;
-			cout << " training RMSE: " << err_train[epoch] << endl; //<< " test RMSE: " << err_valid[epoch] << endl;
+			cout << " training RMSE: " << err_train[epoch] << endl; //" test RMSE: " << err_valid[epoch] << endl;
 
 			//if (epoch % 10) == 0, then checkpoint (save) the w1_M1 and w1_P1
 			//in a file called pmf_weight.
 
 		}//end epoch loop
-		cout << "final training RMSE: " << err_train[maxepoch-1] << endl; //<< " final test RMSE: " << err_valid[maxepoch-1] << "\n";
+		cout << "final training RMSE: " << err_train[maxepoch-1] << endl; //" final test RMSE: " << err_valid[maxepoch-1] << "\n";
+
+		//CALCULATING THE USER-PERSONALIZED RECOMMENDATIONS MATRIX
+		cout << "calculating personalized recommendations matrix" << endl;
+
+
+		//		w1_M1 double[num_m*num_feat];
+		//		w1_P1 double[num_p*num_feat];
+		//customer dimension is i, product dimension is j
+		for(int i=0; i<customer_count; i++) {
+			for(int j=0; j<product_count; j++) {
+				double sum = 0;
+				for(int k=0; k<num_feat; k++) {
+					sum += w1_M1[num_feat*j + k] * w1_P1[num_feat*i + k];
+				}
+				//storing the rating of one product, j, for a customer, i
+				personalized_predicted_ratings[i*product_count + j] = sum;
+			}
+		}
+
+
 
 		//cleanup
 		//delete[] training_data_uid, training_data_mid, training_data_rating;
 		delete[] ratings_customer_id, ratings_product_id, ratings_rating_value;
 		delete[] intermed_training_data_uid, intermed_training_data_mid, intermed_training_data_rating;
 		delete[] shuffler;
-		//delete[] validation_data_uid, validation_data_mid, validation_data_rating;
+		delete[] personalized_predicted_ratings;
+		//		delete[] validation_data_uid, validation_data_mid, validation_data_rating;
 		delete[] IO;
 
 
