@@ -15,6 +15,11 @@
     <p><a href="<c:url value='viewOrders'/>">view all orders</a></p>
 
     <p><a href="<c:url value='logout'/>">log out</a></p>
+    <%-- JOE will insert the code for the executable launcher in a button here --%>
+    <%-- 
+    * JOE will insert the links for the graphs here, possibly move graphs 
+    * to this admin folder and provide some sort of access control.
+    --%>
 </div>
 
 <%-- customerList is requested --%>

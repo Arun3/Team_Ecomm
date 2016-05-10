@@ -125,6 +125,9 @@ COMMENT = 'matches products with customer orders and records their quantity';
 
 alter table product add rating integer;
 
+-- To add password field to customer table
+alter table customer add password VARCHAR(45);
+
 ---
 -- To add cart table to affablebean database
 -- -----------------------------------------------------
