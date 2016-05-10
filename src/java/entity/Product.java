@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author tgiunipero
  */
 @Entity
-@Table(name = "product")
+@Table(name = "product", schema = "affablebean")
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
     @NamedQuery(name = "Product.findById", query = "SELECT p FROM Product p WHERE p.id = :id"),

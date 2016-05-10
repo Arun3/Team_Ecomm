@@ -27,7 +27,7 @@ import javax.persistence.Table;
  * @author tgiunipero
  */
 @Entity
-@Table(name = "category")
+@Table(name = "category", schema = "affablebean")
 @NamedQueries({
     @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
     @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id"),

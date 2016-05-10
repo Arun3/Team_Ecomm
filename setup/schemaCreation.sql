@@ -13,7 +13,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
 DROP SCHEMA IF EXISTS `affablebean` ;
 CREATE SCHEMA IF NOT EXISTS `affablebean` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
-USE `affablebean` ;
+USE affablebean ;
 
 -- -----------------------------------------------------
 -- Table `affablebean`.`customer`

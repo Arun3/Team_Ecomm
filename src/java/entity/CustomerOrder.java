@@ -33,7 +33,7 @@ import javax.persistence.TemporalType;
  * @author tgiunipero
  */
 @Entity
-@Table(name = "customer_order")
+@Table(name = "customer_order", schema = "affablebean")
 @NamedQueries({
     @NamedQuery(name = "CustomerOrder.findAll", query = "SELECT c FROM CustomerOrder c"),
     @NamedQuery(name = "CustomerOrder.findById", query = "SELECT c FROM CustomerOrder c WHERE c.id = :id"),

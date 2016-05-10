@@ -16,6 +16,8 @@ import entity.Customer;
 import entity.Product;
 import entity.Rating;
 import entity.RatingPK;
+import entity.PredictedRating;
+import entity.PredictedRatingPK;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -37,6 +39,7 @@ import session.OrderManager;
 import session.ProductFacade;
 import session.CustomerFacade;
 import session.RatingFacade;
+import session.PredictedRatingFacade;
 import validate.Validator;
 
 /**
@@ -75,6 +78,8 @@ public class ControllerServlet extends HttpServlet {
     private RatingFacade ratingFacade;
     @EJB
     private CartFacade cartFacade;
+    @EJB
+    private PredictedRatingFacade predictedRatingFacade;
 
 
     @Override
@@ -149,8 +154,22 @@ public class ControllerServlet extends HttpServlet {
         // if checkout page is requested
         } 
          else if (userPath.equals("/recommend")) {
-
-            List<Product> products = productFacade.findProductByRating();
+             HttpSession session2=request.getSession();
+             Integer customerId = (Integer)session2.getAttribute("customerId");
+             int numTopPredictedResults = 3; //Administrator can change this value
+             List<PredictedRating> topXPredictedRatingsForCurrentUser = 
+                     predictedRatingFacade.findTopXPredictedRatingsForCurrentUser(
+                             customerId.intValue(), numTopPredictedResults);
+             List<Product> /* predictedTopXProductsForCurrentUser */ products = null;
+             System.err.println("JOEHERE in recommend controllerservlet stderr");
+             System.out.println("JOEHERE in recommend controllerservlet stdout");
+             for( PredictedRating predictedRatingTriplet : topXPredictedRatingsForCurrentUser ) { 
+                 Integer predictedTopXProductId = predictedRatingTriplet.getPredictedRatingPK().getProductId();
+                 Product predictedTopXProduct = productFacade.findProductById(predictedTopXProductId.intValue());
+                 products.add( predictedTopXProduct );
+                 System.err.println("JOEHERE predictedTopXProductId: " + predictedTopXProductId.intValue() );
+             }
+             //List<Product> products = productFacade.findProductByRating(); //old
 
 
             if (products != null /*&& customer.getCustomertId() == customer1.getCustomerId()*/) {

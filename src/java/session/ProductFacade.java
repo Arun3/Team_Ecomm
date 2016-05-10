@@ -5,7 +5,6 @@
  * except in compliance with the terms of the license at:
  * http://developer.sun.com/berkeley_license.html
  */
-
 package session;
 
 import entity.Product;
@@ -21,99 +20,109 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ProductFacade extends AbstractFacade<Product> {
+
     @PersistenceContext(unitName = "AffableBeanPU")
     private EntityManager em;
 
     protected EntityManager getEntityManager() {
         return em;
     }
-       public List<Product> findProductByName(String productName) {
+
+    public List<Product> findProductByName(String productName) {
         List<Product> products = null;
-     
-        try{
+
+        try {
             Query query = em.createNamedQuery("Product.findByName");
-            query.setParameter("productName", "%"+ productName+"%");            
+            query.setParameter("productName", "%" + productName + "%");
             products = query.getResultList();
             // log Select request:
-          // log.debug("Q[?]");
-            
-        }
-        catch(Exception e){
+            // log.debug("Q[?]");
+
+        } catch (Exception e) {
             String err = e.getMessage();
             System.out.println(err);
 
-        }           
+        }
         return products;
     }
-       public List<Product> findProductByRating() {
+
+    public Product findProductById(int productId) {
+        Product product = null;
+        try {
+            Query query = em.createNamedQuery("Product.findById");
+            query.setParameter("id", productId);
+            product = (Product) query.getSingleResult();
+            // log Select request:
+            // log.debug("Q[?]");
+
+        } catch (Exception e) {
+            String err = e.getMessage();
+            System.out.println(err);
+
+        }
+        return product;
+    }
+
+    public List<Product> findProductByRating() {
         List<Product> products = null;
-     
-        try{
+
+        try {
             Query query = em.createNamedQuery("Product.findByRating");
-                       
+
             products = query.getResultList();
             // log Select request:
-          // log.debug("Q[?]");
-            
-        }
-        catch(Exception e){
+            // log.debug("Q[?]");
+
+        } catch (Exception e) {
             String err = e.getMessage();
             System.out.println(err);
 
-        }           
+        }
         return products;
     }
-       public List<Product> findProductByPrice(String price) {
+
+    public List<Product> findProductByPrice(String price) {
         List<Product> products = null;
         float price1;
-            float price2;
-     
-        try{
+        float price2;
+
+        try {
             Query query = em.createNamedQuery("Product.findByPrice");
             float value;
             System.out.println("In product facade");
-        if(price.equals("belowtwo"))
-        {
-            price1=0;
-            price2=2;
-             query.setParameter("price1", 0);  
-             query.setParameter("price2", 2);  
-        }
-        else
-        {
-           price1=2;
-            price2=4;
-             query.setParameter("price1", 2);  
-             query.setParameter("price2", 4); 
-        }
-                     
+            if (price.equals("belowtwo")) {
+                price1 = 0;
+                price2 = 2;
+                query.setParameter("price1", 0);
+                query.setParameter("price2", 2);
+            } else {
+                price1 = 2;
+                price2 = 4;
+                query.setParameter("price1", 2);
+                query.setParameter("price2", 4);
+            }
+
             products = query.getResultList();
-            for(int i=0;i<products.size();i++)
-            {
-                System.out.println("Products retrieved:"+products.get(i));
+            for (int i = 0; i < products.size(); i++) {
+                System.out.println("Products retrieved:" + products.get(i));
             }
             // log Select request:
-          // log.debug("Q[?]");
-            
-        }
-        catch(Exception e){
+            // log.debug("Q[?]");
+
+        } catch (Exception e) {
             String err = e.getMessage();
             System.out.println(err);
 
-        }           
+        }
         return products;
     }
-    
-        @Override
+
+    @Override
     public void create(Product product) {
-            
-         //For logging insert new product
-      //  log.debug("Q[?]");
-        
+
+        //For logging insert new product
+        //  log.debug("Q[?]");
         super.create(product);
-
-
-
 
     }
 

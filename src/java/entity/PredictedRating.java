@@ -21,12 +21,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author joe
  */
 @Entity
-@Table(name = "predicted_rating")
+@Table(name = "predicted_rating", schema = "rating_recommending")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PredictedRating.findAll", query = "SELECT p FROM PredictedRating p"),
     @NamedQuery(name = "PredictedRating.findByPredictedRatingValue", query = "SELECT p FROM PredictedRating p WHERE p.predictedRatingValue = :predictedRatingValue"),
     @NamedQuery(name = "PredictedRating.findByUserId", query = "SELECT p FROM PredictedRating p WHERE p.predictedRatingPK.userId = :userId"),
+    @NamedQuery(name = "PredictedRating.findDescPredictedRatingsByUserId", query = "SELECT p FROM PredictedRating p WHERE p.predictedRatingPK.userId = :userId ORDER BY p.predictedRatingValue DESC"),
     @NamedQuery(name = "PredictedRating.findByProductId", query = "SELECT p FROM PredictedRating p WHERE p.predictedRatingPK.productId = :productId")})
 public class PredictedRating implements Serializable {
 

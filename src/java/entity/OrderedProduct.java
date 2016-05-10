@@ -24,7 +24,7 @@ import javax.persistence.Table;
  * @author tgiunipero
  */
 @Entity
-@Table(name = "ordered_product")
+@Table(name = "ordered_product", schema = "affablebean")
 @NamedQueries({
     @NamedQuery(name = "OrderedProduct.findAll", query = "SELECT o FROM OrderedProduct o"),
     @NamedQuery(name = "OrderedProduct.findByCustomerOrderId", query = "SELECT o FROM OrderedProduct o WHERE o.orderedProductPK.customerOrderId = :customerOrderId"),
