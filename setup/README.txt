@@ -94,4 +94,16 @@ Netbeans 8 Users:
       Restart your IDE after this.
     
 
+Sample Data for Testing the Recommender System:
+Note that, in this folder, there is a file called “ratingSchema_PMF_Loading_Sample_Training_Data.sql”. This file can be used to import sample data for the PMF recommender system from the following webpage: 
+http://www.cs.toronto.edu/~rsalakhu/BPMF.html
+
+Download the http://www.cs.toronto.edu/~rsalakhu/code_BPMF/moviedata.mat datafile. 
+Using either Matlab or Octave, you can import this data, and then re-export its arrays to separate csv files per the aforementioned sql file. 
+Make sure the columns are proper: 
+ The training data user_id value can reach up to 6040
+ The training data movie_id value can reach up to 3952
+ The training data rating can be an int from 1 to 5
+Use this information to match columns properly.
+
     
