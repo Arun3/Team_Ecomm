@@ -4,9 +4,11 @@ Troy Giunipero
 Joseph Caprino
 3 May 2016 (Edits)
 
-For detailed setup instructions, see:  http://netbeans.org/kb/docs/javaee/ecommerce/setup.html
+For detailed setup instructions corresponding to the ORIGINAL Affablebean Project, see:  
+http://netbeans.org/kb/docs/javaee/ecommerce/setup.html (note that our project is similar, but has 
+some major differences such as database schemas)
 
-The following is a course-grained summary of setup steps and requirements.
+The following is a coarse-grained summary of setup steps and requirements.
 
 The AffableBean application requires access to a MySQL database.
 
