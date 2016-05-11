@@ -81,7 +81,7 @@ int main() {
 		sql_driver = sql::mysql::get_mysql_driver_instance();
 		sql_connection = sql_driver->connect("tcp://127.0.0.1:3306", "root", "nbuser");
 		//connecting to the database
-		sql_connection->setSchema("affablebean_pmf_test");
+		sql_connection->setSchema("affablebean");
 
 		sql_statement = sql_connection->createStatement();
 
@@ -128,7 +128,7 @@ int main() {
 		//read in values from ratings database
 		//use these array maps product_id_map and customer_id_map to reconstruct the triplets
 		//inside the program
-		sql_connection->setSchema("rating_recommending_pmf_test");
+		sql_connection->setSchema("rating_recommending");
 		sql_statement = sql_connection->createStatement();
 		//		sql_statement->execute("INSERT INTO rating VALUES (1.5,1,2),(1.5,2,3),(1.5,3,4),(1.5,4,5),(1.5,5,6)");
 		sql_results = sql_statement->executeQuery("SELECT COUNT(*) AS rating_count FROM rating");
@@ -663,7 +663,7 @@ int main() {
 		//INSERTING USER-PERSONALIZED RECOMMENDATION PREDICTIONS INTO THE DATABASE:
 		cout << "inserting user-personalized recommendation predictions for each product";
 		cout << " into the database" << endl;
-		sql_connection->setSchema("rating_recommending_pmf_test");
+		sql_connection->setSchema("rating_recommending");
 
 		sql_statement = sql_connection->createStatement();
 
