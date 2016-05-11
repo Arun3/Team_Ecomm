@@ -35,9 +35,14 @@ Before running the application,
 
  4. Click OK to exit the dialog.
 
- 5. Run the SQL scripts found in this directory. The affablebean_schema script creates tables
-    necessary for the application. The affablebean_sample_data script adds sample data to the
-    tables. Run the schema creation script first, then run the sample data script. To run scripts:
+ 5. Run the SQL scripts found in this directory. The schemaCreation script creates tables
+    necessary for the application. The sampleData script adds sample data to the
+    tables. The ratingSchema builds the rating database schema. The ratingSchema_PMF_Test_Schema
+    builds a test schema for the PMF Recommender System and populates some values to prep for 
+    testing with the data discussed in Appendix A at the bottom of this document. The ratingSchema_PMF_Loading_Sample_Training_Data part of the testing data discussed in Appendix A. 
+    Run the schemaCreation script first, then run the sampleData script, then run the
+    ratingSchema script. If you would like test data for the PMF recommender system, then run 
+    the ratingSchema_PMF_Test_Schema, and then see Appendix A. To run scripts:
 
     a. Double-click each script node to open them in the IDE's editor.
     b. In the toolbar above the editor, make sure the connection to the
@@ -94,7 +99,7 @@ Netbeans 8 Users:
       Restart your IDE after this.
     
 
-Sample Data for Testing the Recommender System:
+APPENDIX A: Sample Data for Testing the Recommender System:
 Note that, in this folder, there is a file called “ratingSchema_PMF_Loading_Sample_Training_Data.sql”. This file can be used to import sample data for the PMF recommender system from the following webpage: 
 http://www.cs.toronto.edu/~rsalakhu/BPMF.html
 
