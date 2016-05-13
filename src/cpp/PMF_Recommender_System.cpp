@@ -32,6 +32,9 @@
 //and connector-cpp-examples-complete-example-2.html
 //which is licensed under GPL V2
 
+//BE SURE TO SET THE PROPER sql_connection and sql_schema throughout the code where you find these variables, 
+//according to your system and current use (i.e. testing or deployment)
+
 
 #include <iostream>
 #include <algorithm>
